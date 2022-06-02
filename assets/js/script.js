@@ -6,14 +6,13 @@ var today = moment().format("dddd, MMMM Do");
 // var now = moment().format("H:mm:ss");
 
 // for testing
-// var today = moment("Wednesday, June 1st 15:12:07", "dddd, MMMM Do H:mm:ss");
-var now = moment("15:12:07", "H:mm:ss");
+var now = moment("13:12:07", "H:mm:ss");
 
 currentDayElement.text(today);
 
 for (var i = 9; i < 18; ++i) {
-    var timeBlock = $('<div>');
-    timeBlock.addClass('time-block');
+    var rowDiv = $('<div>');
+    rowDiv.addClass('row');
     /* HOUR DIV */
     var hourDiv = $('<div>');
     hourDiv.addClass('hour');
@@ -21,8 +20,11 @@ for (var i = 9; i < 18; ++i) {
     hourDiv.text(moment(timeIndex, "H:mm").format("hA"));
     
     /* TEXT DIV */
+    var timeBlockDiv = $('<div>');
+    timeBlockDiv.addClass('time-block');
     var textDiv = $('<div>');
     textDiv.addClass('textarea');
+    
 
     if (timeIndex.hour() === now.hour()) {
         textDiv.addClass('present');
@@ -34,10 +36,16 @@ for (var i = 9; i < 18; ++i) {
 
     var textArea = $('<textarea style="width:100%, height:100%"/>');
     textDiv.append(textArea);
+    timeBlockDiv.append(textDiv);
     
-    timeBlock.append(hourDiv);
-    timeBlock.append(textDiv);
+    /* SAVE DIV */
+    var saveDiv = $('<div>');
+    saveDiv.addClass('saveBtn');
+    saveDiv.html('&#128190;');
 
-    blocksElement.append(timeBlock);
+    rowDiv.append(hourDiv);
+    rowDiv.append(timeBlockDiv);
+    rowDiv.append(saveDiv);
+
+    blocksElement.append(rowDiv);
 }
-
