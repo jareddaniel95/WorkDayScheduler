@@ -80,3 +80,11 @@ textarea {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
+
+.saved {
+  text-align: center;
+  margin-top: -25px;
+  margin-bottom: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  color: #46B346;
+}

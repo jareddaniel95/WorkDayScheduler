@@ -1,10 +1,7 @@
 var currentDayElement = $('#currentDay');
 var blocksElement = $('#blocks');
 var today = moment().format("dddd, MMMM Do");
-var now = moment();//.format("H:mm:ss");
-
-// for testing
-// var now = moment("13:12:07", "H:mm:ss");
+var now = moment();
 
 currentDayElement.text(today);
 
@@ -15,7 +12,6 @@ for (var i = 9; i < 18; ++i) {
     var hourDiv = $('<div>');
     hourDiv.addClass('hour');
     timeIndex = moment(`${i}:00`, 'H:mm');
-    intHour = timeIndex.hour();
     var rowData = moment(timeIndex, "H:mm").format("hA");
     hourDiv.text(rowData);
     
@@ -25,8 +21,7 @@ for (var i = 9; i < 18; ++i) {
     var textDiv = $('<div>');
     textDiv.addClass('textarea');
     
-
-    if (intHour === now.hour()) {
+    if (timeIndex.hour() === now.hour()) {
         textDiv.addClass('present');
     } else if (timeIndex.isBefore(now)) {
         textDiv.addClass('past');
@@ -55,6 +50,19 @@ for (var i = 9; i < 18; ++i) {
     blocksElement.append(rowDiv);
 }
 
+/* Save appointment */
 blocksElement.on('click', '.saveBtn', function() {
     localStorage.setItem($(this).data("hour"), $(this).parent('div').find('.time-block').children().first().children().first().val());
+    var savedDiv = $('<div>');
+    savedDiv.html("Appointment Saved &#10004;")
+    savedDiv.addClass('saved');
+    blocksElement.prepend(savedDiv);
+    var timer = 0;
+    var timeInterval = setInterval(function () {
+        ++timer;
+        if (timer >= 5) {
+            blocksElement.children().first().remove();
+            clearInterval(timeInterval)
+        }
+    }, 1000);
 });
